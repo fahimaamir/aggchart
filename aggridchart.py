@@ -14,7 +14,8 @@ import matplotlib
 matplotlib.use('Agg')       #서버에서, 화면에 표시하기 위해서 필요
 import plotly.express as px
 matplotlib.use('Agg')       #서버에서, 화면에 표시하기 위해서 필요
-    
+st.set_page_config(layout="wide")
+     
 data = {
         'Region': ['North America', 'North America', 'North America', 'Europe', 'Europe', 'Asia', 'Asia'],
         'Country': ['USA', 'USA', 'Canada', 'Germany', 'France', 'Japan', 'China'],
@@ -47,6 +48,7 @@ for column in df.columns:
 gridOptions = gb.build()
 mfa = AgGrid(
         df,
+        width=500,
         gridOptions=gridOptions,
         update_mode=GridUpdateMode.GRID_CHANGED,
         columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
@@ -55,6 +57,7 @@ mfa = AgGrid(
 
 if st.button('Check availability Bar Chart'):
     mfa4 =mfa['data']
+    
     selectedcol = mfa4.columns
 #   selectedcolgroup= selectedcol-1
     #allgroup = ''
@@ -62,7 +65,8 @@ if st.button('Check availability Bar Chart'):
 #       allgroup=allgroup+' '+mfa4[column].values.tolist()
         #gb.configure_column(column, filter=True)
 
-
+    st.write(mfa4)        
+    #mfa4.set_index(mfa4.iloc[:,0], inplace=True)
     st.bar_chart(mfa4)
     st.area_chart(mfa4)
     st.line_chart(mfa4)
@@ -73,6 +77,7 @@ if st.button('Check availability Bar Chart'):
 
 if st.button('Check availability Pie Chart'):
     mfa4 =mfa['data']
+    st.write(mfa4)
     selectedcol = mfa4.columns
 #   selectedcolgroup= selectedcol-1
     #allgroup = ''
